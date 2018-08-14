@@ -11,15 +11,6 @@ class App extends Component {
     ],
     showPersons: true
   }
-  nameHandler = (newName) => {
-    this.setState({
-      persons : [
-        {name: 'Mark', age:25},
-        {name: 'Alex', age:24},
-        {name: newName, age:30}
-      ]
-    })
-  }
 
   nameChangedHandler = (event) => {
     this.setState({
@@ -29,6 +20,14 @@ class App extends Component {
         {name: event.target.value, age:30}
       ]
     })
+  }
+
+  deletePersonHandler = (personIndex) => {
+    const persons = this.state.persons;
+    persons.splice(personIndex, 1);
+    this.setState({
+      persons: persons
+    });
   }
 
 togglePersonsHandler = () => {
@@ -48,30 +47,28 @@ togglePersonsHandler = () => {
     };
 
     let persons = null;
+
     if (this.state.showPersons) {
+
       persons = (
-        <div className="persons">
-        <Person name={this.state.persons[0].name}
-          age={this.state.persons[0].age}/>
-        <Person name={this.state.persons[1].name}
-          age={this.state.persons[1].age}/>
-        <Person name={this.state.persons[2].name}
-          click={this.nameHandler.bind(this, 'NewOnesss')}
-          age={this.state.persons[2].age}
-          changed={this.nameChangedHandler}
-          >My brother: Brian</Person>
+        <div>
+          {this.state.persons.map((person, index) => {
+          return <Person
+          click={() => this.deletePersonHandler(index)}
+          name={person.name}
+          age={person.age}/>
+        })}
       </div>
-      );
-    }
+    )}
 
     return (
       <div className="App">
         <h1> Figuring out State and Stateless components </h1>
-        <p> JSX code goes inside of this section </p>
+        <p> Click on a the first line of each to delete the person </p>
         {persons}
         <button style = {style}
             onClick={this.togglePersonsHandler}>
-            Toggle Persons
+            Toggle All Persons
             </button>
       </div>
     );
