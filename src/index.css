@@ -4,3 +4,10 @@ body {
   font-family: sans-serif;
   background-color: white;
 }
+
+.buttonSelected {
+background-color: white;
+border: 1px solid blue;
+padding: 8px;
+cursor: pointer;
+}
