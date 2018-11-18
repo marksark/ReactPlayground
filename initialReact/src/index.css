@@ -6,7 +6,7 @@ body {
 }
 
 .buttonSelected {
-background-color: white;
+background-color: green;
 border: 1px solid blue;
 padding: 8px;
 cursor: pointer;

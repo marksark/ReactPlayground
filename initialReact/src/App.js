@@ -50,6 +50,12 @@ togglePersonsHandler = () => {
 
 // everything under render re-renders everytime the state is changed
   render() {
+    const style = {
+      backgroundColor: "green",
+      border: "1px solid blue",
+      padding: "8px",
+      cursor: "pointer"
+    }
 
     let persons = null;
 
@@ -67,16 +73,27 @@ togglePersonsHandler = () => {
             />
           })}
         </div>
-    )}
+    );
+    style.backgroundColor = 'red';
+  }
+
+    const classes =[];
+    if (this.state.persons.length <= 2) {
+      classes.push('red');
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push('bold');
+    }
 
     return (
       //try to keep components under this minimal
       <div className="App">
         <h1> Improving Knowledge about State/less components </h1>
-        <p> Click on the first line of each to delete the person </p>
+        <p className={classes.join(' ')}> Click on the first line of each to delete the person </p>
         {persons}
         <button
           className = "buttonSelected"
+            style={style}
             onClick={this.togglePersonsHandler}>
             Toggle All Persons
         </button>
