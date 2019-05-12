@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Person from './Person/Person';
-import './App.css';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+import classes from './App.css';
 
 class App extends Component {
   state = {
@@ -50,13 +51,7 @@ togglePersonsHandler = () => {
 
 // everything under render re-renders everytime the state is changed
   render() {
-    const style = {
-      backgroundColor: "green",
-      border: "1px solid blue",
-      padding: "8px",
-      cursor: "pointer"
-    }
-
+    let btnClass = null;
     let persons = null;
 
     //how to show all persons without calling individually
@@ -64,38 +59,36 @@ togglePersonsHandler = () => {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
-            return <Person
+            return <ErrorBoundary   key = {person.id}> <Person
             click = {() => this.deletePersonHandler(index)}
             name = {person.name}
             age = {person.age}
-            key = {person.id}
             changed = {(event) => this.nameChangedHandler(event, person.id)}
-            />
+            />< /ErrorBoundary>
           })}
         </div>
     );
-    style.backgroundColor = 'red';
+    btnClass=classes.Red
   }
 
-    const classes =[];
+    const assignedClasses =[];
     if (this.state.persons.length <= 2) {
-      classes.push('red');
+      assignedClasses.push(classes.red);
     }
     if (this.state.persons.length <= 1) {
-      classes.push('bold');
+      assignedClasses.push(classes.bold);
     }
 
     return (
       //try to keep components under this minimal
-      <div className="App">
+      <div className={classes.App}>
         <h1> Improving Knowledge about State/less components </h1>
-        <p className={classes.join(' ')}> Click on the first line of each to delete the person </p>
+        <p className={assignedClasses.join(' ')}> Click on the first line of each to delete the person </p>
         {persons}
         <button
-          className = "buttonSelected"
-            style={style}
+            className={btnClass}
             onClick={this.togglePersonsHandler}>
-            Toggle All Persons
+            Toggle Persons
         </button>
       </div>
     );
